@@ -49,9 +49,7 @@ def jamming(model: Model, data: Data, force: float) -> float:
 
     theta, X = data.theta, data.x
 
-    dS_dtheta = (r / (L - X) ** 2) ** 2 * (
-        (2 * L**2 - (r * theta) ** 2) * r * theta**3 * C_r - L**3 * theta * C_L
-    )
+    dS_dtheta = (r / (L - X) ** 2) ** 2 * ((2 * L**2 - (r * theta) ** 2) * r * theta**3 * C_r - L**3 * theta * C_L)
 
     return dS_dtheta * (force**2)
 

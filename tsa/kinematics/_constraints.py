@@ -1,9 +1,7 @@
 from ..model import Model, Data
 
 
-def position_constraint(
-    model: Model, data: Data, theta: float | None = None, x: float | None = None
-) -> float:
+def position_constraint(model: Model, data: Data, theta: float | None = None, x: float | None = None) -> float:
     """Holonomic constraint on the motor angle and contraction:
     c = f(theta, x)"""
 
@@ -47,10 +45,5 @@ def acceleration_constraint(
     data.x = x
     data.dx = dx
 
-    ddc = (
-        theta * model.r**2 * ddtheta
-        + model.r**2 * dtheta**2
-        - (model.L - x) * ddx
-        + dx**2
-    )
+    ddc = theta * model.r**2 * ddtheta + model.r**2 * dtheta**2 - (model.L - x) * ddx + dx**2
     return ddc

@@ -14,10 +14,7 @@ def djacobian(
     """Calculate time derevetive of the jacobian with respect to time
     as function of motor state"""
     if theta is not None and dtheta is not None and x is not None and dx is not None:
-        return (
-            model.r**2 * dtheta / (model.L - x)
-            + theta * model.r**2 * dx / (model.L - x) ** 2
-        )
+        return model.r**2 * dtheta / (model.L - x) + theta * model.r**2 * dx / (model.L - x) ** 2
 
     if theta is not None and dtheta is not None:
         x = contraction(model, data, theta)
@@ -29,12 +26,7 @@ def djacobian(
         dtheta = motor_speed(model, data, theta, dx)
         return djacobian(model, data, theta, dtheta, x, dx)
 
-    if (
-        data.theta is not None
-        and data.dtheta is not None
-        and data.x is not None
-        and data.dx is not None
-    ):
+    if data.theta is not None and data.dtheta is not None and data.x is not None and data.dx is not None:
         return djacobian(model, data, data.theta, data.dtheta, data.x, data.dx)
 
 
