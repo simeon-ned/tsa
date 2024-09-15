@@ -11,10 +11,28 @@ def djacobian(
     x: float | None = None,
     dx: float | None = None,
 ) -> float:
-    """Calculate time derevetive of the jacobian with respect to time
-    as function of motor state"""
+    """
+    Calculate time derivative of the Jacobian with respect to time as a function of motor state.
+
+    Args:
+        model (Model): The model object containing kinematic parameters.
+        data (Data): The data object to store and retrieve state variables.
+        theta (float | None, optional): The motor angle in radians. Defaults to None.
+        dtheta (float | None, optional): The motor angular velocity in rad/s. Defaults to None.
+        x (float | None, optional): The contraction in meters. Defaults to None.
+        dx (float | None, optional): The contraction velocity in m/s. Defaults to None.
+
+    Returns:
+        float: The time derivative of the Jacobian.
+
+    Note:
+        This function does not update the data object. It uses the provided values or calculates
+        missing values using other kinematic functions.
+    """
+    L, r = model.kinematic.length, model.kinematic.radius
+
     if theta is not None and dtheta is not None and x is not None and dx is not None:
-        return model.r**2 * dtheta / (model.L - x) + theta * model.r**2 * dx / (model.L - x) ** 2
+        return r**2 * dtheta / (L - x) + theta * r**2 * dx / (L - x) ** 2
 
     if theta is not None and dtheta is not None:
         x = contraction(model, data, theta)
@@ -29,13 +47,32 @@ def djacobian(
     if data.theta is not None and data.dtheta is not None and data.x is not None and data.dx is not None:
         return djacobian(model, data, data.theta, data.dtheta, data.x, data.dx)
 
+    raise ValueError("Insufficient data to calculate dJacobian")
+
 
 def motor_acceleration(
     model: Model,
     data: Data,
     xs: tuple[float, float, float],
 ) -> float:
-    """Calculate motor acceleration as function of position and contraction speed"""
+    """
+    Calculate motor acceleration as a function of position and contraction kinematics.
+
+    Args:
+        model (Model): The model object containing kinematic parameters.
+        data (Data): The data object to store and retrieve state variables.
+        xs (tuple[float, float, float]): A tuple containing (x, dx, ddx).
+            x: The contraction in meters.
+            dx: The contraction velocity in m/s.
+            ddx: The contraction acceleration in m/s^2.
+
+    Returns:
+        float: The calculated motor angular acceleration (d2theta) in rad/s^2.
+
+    Note:
+        This function updates data.x and data.dx with the input values.
+        It does not update other fields of the data object.
+    """
     x, dx, ddx = xs
 
     data.x = x
@@ -45,6 +82,6 @@ def motor_acceleration(
 
     theta = motor_angle(model, data)
     dtheta = dx / J
-    d2theta = (ddx - djacobian(model, data, theta=theta, dtheta=dtheta)) / J
+    d2theta = (ddx - djacobian(model, data, theta=theta, dtheta=dtheta, x=x, dx=dx)) / J
 
     return d2theta
