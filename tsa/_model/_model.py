@@ -9,7 +9,7 @@ class KinematicParameters:
 
 
 @dataclass
-class JointParameters:
+class SpaceParameters:
     inertia: float | casadi.SX  # inertia
     damping: float | casadi.SX  # viscous damping
     friction: float | casadi.SX  # coulomb friction
@@ -17,16 +17,16 @@ class JointParameters:
 
 @dataclass
 class DynamicParameters:
-    motor: JointParameters = field(
-        default_factory=lambda: JointParameters(
+    motor: SpaceParameters = field(
+        default_factory=lambda: SpaceParameters(
             inertia=1e-6,  # motor inertia
             damping=0.1,  # motor viscous damping
             friction=0.05,  # motor coulomb friction
         )
     )
-    load: JointParameters = field(
-        default_factory=lambda: JointParameters(
-            inertia=1.0,  # load inertia (equivalent to mass for point mass)
+    load: SpaceParameters = field(
+        default_factory=lambda: SpaceParameters(
+            inertia=1.0,  # load inertia (equivalent to mass)
             damping=0.01,  # load viscous damping
             friction=0.1,  # load coulomb friction
         )

@@ -1,4 +1,4 @@
-from ..model import Model, Data
+from .._model import Model, Data
 from ._position import contraction, motor_angle
 from ._velocity import contraction_speed, motor_speed, jacobian
 

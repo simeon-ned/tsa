@@ -1,5 +1,5 @@
 from enum import IntEnum
-from ..model import Model, Data
+from .._model import Model, Data
 from ..kinematics import jacobian, djacobian
 import casadi
 

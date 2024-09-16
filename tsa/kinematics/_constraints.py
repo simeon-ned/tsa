@@ -1,4 +1,4 @@
-from ..model import Model, Data
+from .._model import Model, Data
 
 
 def position_constraint(model: Model, data: Data, theta: float | None = None, x: float | None = None) -> float:

@@ -1,4 +1,4 @@
-from ..model import Model, Data
+from .._model import Model, Data
 
 
 def contraction(model: Model, data: Data, theta: float | None = None) -> float:

@@ -1,5 +1,9 @@
 from dataclasses import dataclass
 
+# TODO:
+# Create class for SpaceData it will contain position, velocity, acceleration
+#
+
 
 @dataclass
 class Data:

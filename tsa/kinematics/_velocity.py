@@ -1,4 +1,4 @@
-from ..model import Model, Data
+from .._model import Model, Data
 from ._position import motor_angle
 
 
