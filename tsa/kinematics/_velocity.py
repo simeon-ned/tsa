@@ -27,14 +27,17 @@ def jacobian(
     L, r = model.kinematic.length, model.kinematic.radius
 
     if theta is not None and x is not None:
-        return theta * (r**2) / (L - x)
+        data.motor.jacobian = theta * (r**2) / (L - x)
+        return data.motor.jacobian
 
     if theta is not None:
-        return theta * (r**2) / (L**2 - (theta * r) ** 2) ** 0.5
+        data.motor.jacobian = theta * (r**2) / (L**2 - (theta * r) ** 2) ** 0.5
+        return data.motor.jacobian
 
     if x is not None:
         theta = motor_angle(model, data, x)
-        return jacobian(model, data, theta=theta)
+        data.motor.jacobian = jacobian(model, data, theta=theta)
+        return data.motor.jacobian
 
     if data.motor.position is not None and data.load.position is not None:
         return jacobian(model, data, data.motor.position, data.load.position)
