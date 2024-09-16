@@ -17,8 +17,8 @@ def position_constraint(model: Model, data: Data, theta: float | None = None, x:
     Note:
         This function does not update the data object.
     """
-    theta = data.theta if theta is None else theta
-    x = data.x if x is None else x
+    theta = data.motor.position if theta is None else theta
+    x = data.load.position if x is None else x
     L, r = model.kinematic.length, model.kinematic.radius
     c = theta**2 * r**2 + (L - x) ** 2 - L**2
     return c
@@ -49,10 +49,10 @@ def velocity_constraint(
     Note:
         This function does not update the data object.
     """
-    theta = data.theta if theta is None else theta
-    dtheta = data.dtheta if dtheta is None else dtheta
-    x = data.x if x is None else x
-    dx = data.dx if dx is None else dx
+    theta = data.motor.position if theta is None else theta
+    dtheta = data.motor.velocity if dtheta is None else dtheta
+    x = data.load.position if x is None else x
+    dx = data.load.velocity if dx is None else dx
     L, r = model.kinematic.length, model.kinematic.radius
     dc = theta * r**2 * dtheta - (L - x) * dx
     return dc
@@ -83,16 +83,16 @@ def acceleration_constraint(
         float: The value of the acceleration constraint function.
 
     Note:
-        This function updates data.theta, data.dtheta, data.x, and data.dx with the input values.
+        This function updates data.motor.position, data.motor.velocity, data.load.position, and data.load.velocity with the input values.
     """
     theta, dtheta, ddtheta = thetas
     x, dx, ddx = xs
 
     # update data values
-    data.theta = theta
-    data.dtheta = dtheta
-    data.x = x
-    data.dx = dx
+    data.motor.position = theta
+    data.motor.velocity = dtheta
+    data.load.position = x
+    data.load.velocity = dx
 
     L, r = model.kinematic.length, model.kinematic.radius
     ddc = theta * r**2 * ddtheta + r**2 * dtheta**2 - (L - x) * ddx + dx**2

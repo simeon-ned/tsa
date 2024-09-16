@@ -2,7 +2,6 @@ from .._model import Model, Data
 from ._position import motor_angle
 
 
-# TODO: Think if we need to add space as argument
 def jacobian(
     model: Model,
     data: Data,
@@ -37,8 +36,8 @@ def jacobian(
         theta = motor_angle(model, data, x)
         return jacobian(model, data, theta=theta)
 
-    if data.theta is not None and data.x is not None:
-        return jacobian(model, data, data.theta, data.x)
+    if data.motor.position is not None and data.load.position is not None:
+        return jacobian(model, data, data.motor.position, data.load.position)
 
     raise ValueError("Insufficient data to calculate Jacobian")
 
@@ -62,15 +61,15 @@ def contraction_speed(
         float: The calculated contraction speed (dx) in m/s.
 
     Note:
-        This function updates data.x, data.dtheta, and data.dx with the input and calculated values respectively.
+        This function updates data.load.position, data.motor.velocity, and data.load.velocity with the input and calculated values respectively.
     """
-    x = data.x if x is None else x
-    dtheta = data.dtheta if dtheta is None else dtheta
+    x = data.load.position if x is None else x
+    dtheta = data.motor.velocity if dtheta is None else dtheta
 
-    data.x = x
-    data.dtheta = dtheta
-    data.dx = jacobian(model, data, x=x) * dtheta
-    return data.dx
+    data.load.position = x
+    data.motor.velocity = dtheta
+    data.load.velocity = jacobian(model, data, x=x) * dtheta
+    return data.load.velocity
 
 
 def motor_speed(
@@ -92,12 +91,12 @@ def motor_speed(
         float: The calculated motor angular velocity (dtheta) in rad/s.
 
     Note:
-        This function updates data.theta, data.dx, and data.dtheta with the input and calculated values respectively.
+        This function updates data.motor.position, data.load.velocity, and data.motor.velocity with the input and calculated values respectively.
     """
-    theta = data.theta if theta is None else theta
-    dx = data.dx if dx is None else dx
+    theta = data.motor.position if theta is None else theta
+    dx = data.load.velocity if dx is None else dx
 
-    data.theta = theta
-    data.dx = dx
-    data.dtheta = dx / jacobian(model, data, theta=theta)
-    return data.dtheta
+    data.motor.position = theta
+    data.load.velocity = dx
+    data.motor.velocity = dx / jacobian(model, data, theta=theta)
+    return data.motor.velocity

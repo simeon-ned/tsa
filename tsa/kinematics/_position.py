@@ -17,13 +17,13 @@ def contraction(model: Model, data: Data, theta: float | None = None) -> float:
         float: The calculated contraction (x) in meters.
 
     Note:
-        This function updates data.theta and data.x with the input and calculated values respectively.
+        This function updates data.motor.position and data.load.position with the input and calculated values respectively.
     """
-    theta = data.theta if theta is None else theta
+    theta = data.motor.position if theta is None else theta
     L, r = model.kinematic.length, model.kinematic.radius
-    data.theta = theta
-    data.x = L - (L**2 - (theta * r) ** 2) ** 0.5
-    return data.x
+    data.motor.position = theta
+    data.load.position = L - (L**2 - (theta * r) ** 2) ** 0.5
+    return data.load.position
 
 
 def motor_angle(model: Model, data: Data, x: float | None = None) -> float:
@@ -42,11 +42,11 @@ def motor_angle(model: Model, data: Data, x: float | None = None) -> float:
         float: The calculated motor angle (theta) in radians.
 
     Note:
-        This function updates data.x and data.theta with the input and calculated values respectively.
+        This function updates data.load.position and data.motor.position with the input and calculated values respectively.
     """
-    x = data.x if x is None else x
+    x = data.load.position if x is None else x
     L, r = model.kinematic.length, model.kinematic.radius
 
-    data.x = x
-    data.theta = (L**2 - (L - x) ** 2) ** 0.5 / r
-    return data.theta
+    data.load.position = x
+    data.motor.position = (L**2 - (L - x) ** 2) ** 0.5 / r
+    return data.motor.position

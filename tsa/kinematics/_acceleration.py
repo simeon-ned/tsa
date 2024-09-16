@@ -44,8 +44,13 @@ def djacobian(
         dtheta = motor_speed(model, data, theta, dx)
         return djacobian(model, data, theta, dtheta, x, dx)
 
-    if data.theta is not None and data.dtheta is not None and data.x is not None and data.dx is not None:
-        return djacobian(model, data, data.theta, data.dtheta, data.x, data.dx)
+    if (
+        data.motor.position is not None
+        and data.motor.velocity is not None
+        and data.load.position is not None
+        and data.load.velocity is not None
+    ):
+        return djacobian(model, data, data.motor.position, data.motor.velocity, data.load.position, data.load.velocity)
 
     raise ValueError("Insufficient data to calculate dJacobian")
 
@@ -70,15 +75,15 @@ def motor_acceleration(
         float: The calculated motor angular acceleration (d2theta) in rad/s^2.
 
     Note:
-        This function updates data.x and data.dx with the input values.
+        This function updates data.load.position and data.load.velocity with the input values.
         It does not update other fields of the data object.
     """
     x, dx, ddx = xs
 
-    data.x = x
-    data.dx = dx
+    data.load.position = x
+    data.load.velocity = dx
 
-    J = jacobian(model, data, x=data.x)
+    J = jacobian(model, data, x=data.load.position)
 
     theta = motor_angle(model, data)
     dtheta = dx / J

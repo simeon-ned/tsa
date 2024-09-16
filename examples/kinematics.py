@@ -6,10 +6,11 @@ model = Model()
 model.kinematic.length = ca.SX.sym("L")
 model.kinematic.radius = ca.SX.sym("r")
 
-data = Data(theta=ca.SX.sym("theta"), x=ca.SX.sym("x"))
+data = Data()
+data.motor.position = ca.SX.sym("theta")
 
 print(model)
 print(data)
 print(contraction(model, data))
-print(ca.jacobian(contraction(model, data), data.theta))
+print(ca.jacobian(contraction(model, data), data.motor.position))
 print(jacobian(model, data))

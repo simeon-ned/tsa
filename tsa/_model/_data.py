@@ -1,14 +1,22 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import casadi
 
-# TODO:
-# Create class for SpaceData it will contain position, velocity, acceleration
-#
+
+# TODO: Should we mark space with ENUM value?
+@dataclass
+class SpaceData:
+    position: float | casadi.SX = 0.0
+    velocity: float | casadi.SX = 0.0
+    acceleration: float | casadi.SX = 0.0
+    force: float | casadi.SX = 0.0
+    coriolis: float | casadi.SX = 0.0
+    inertia: float | casadi.SX = 0.0
+    nonlinear: float | casadi.SX = 0.0
+    static: float | casadi.SX = 0.0
+    jamming: float | casadi.SX = 0.0
 
 
 @dataclass
 class Data:
-    theta: float = 0  # motor angle
-    x: float = 0  # load position
-
-    dtheta: float = 0  # motor speed
-    dx: float = 0  # load speed
+    motor: SpaceData = field(default_factory=SpaceData)
+    load: SpaceData = field(default_factory=SpaceData)
