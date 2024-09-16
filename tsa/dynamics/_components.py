@@ -1,5 +1,5 @@
 from enum import IntEnum
-from .._model import Model, Data
+from .._structs import Model, Data
 from ..kinematics import jacobian, djacobian
 import casadi
 
@@ -11,7 +11,7 @@ class Space(IntEnum):
 
 def inertia(model: Model, data: Data, space: Space) -> float | casadi.SX:
     """
-    Calculate the inertia term D(q) for the chosen space.
+    Calculate the inertia term M(q) for the chosen space.
 
     Args:
         model (Model): The model object containing system parameters.
@@ -19,7 +19,7 @@ def inertia(model: Model, data: Data, space: Space) -> float | casadi.SX:
         space (Space): The space enum (MOTOR or LOAD) for which to calculate inertia.
 
     Returns:
-        float | casadi.SX: The inertia term D(q).
+        float | casadi.SX: The inertia term M(q).
 
     Raises:
         ValueError: If an invalid space is provided.

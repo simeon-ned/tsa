@@ -1,4 +1,6 @@
-from .._model import Model, Data
+from .._structs import Model, Data
+
+# TODO: Add the main docstring with references to papers
 
 
 def contraction(model: Model, data: Data, theta: float | None = None) -> float:
