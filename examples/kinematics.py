@@ -1,5 +1,5 @@
-from tsa.model import Model, Data
-from tsa.kinematics import contraction
+from tsa import Model, Data
+from tsa.kinematics import contraction, jacobian
 import casadi as ca
 
 model = Model()
@@ -12,3 +12,4 @@ print(model)
 print(data)
 print(contraction(model, data))
 print(ca.jacobian(contraction(model, data), data.theta))
+print(jacobian(model, data))
