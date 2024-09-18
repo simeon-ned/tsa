@@ -2,6 +2,7 @@ from .._structs import Model, Data
 from ._position import motor_angle
 
 
+# TODO: Add the space flag to this calculation
 def jacobian(
     model: Model,
     data: Data,

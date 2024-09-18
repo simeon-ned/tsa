@@ -1,5 +1,11 @@
 from dataclasses import dataclass, field
 import casadi
+from enum import IntEnum
+
+
+class Space(IntEnum):
+    MOTOR = 1
+    LOAD = 2
 
 
 @dataclass
