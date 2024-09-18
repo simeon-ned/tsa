@@ -83,6 +83,6 @@ If you use this software in your research, please cite it as follows:
   author = {Nedelchev, Simeon and Kozlov, Lev},
   title = {Twisted String Actuator (TSA) Modeling and Simulation},
   year = {2024},
-  url = {https://github.com/yourusername/tsa-modeling}
+  url = {https://github.com/simeon-ned/tsa}
 }
 ```

@@ -18,5 +18,5 @@ presented in the following papers:
 """
 
 from ._components import Space, coriolis, inertia, jamming, nonlinear, static
-
+from ._problems import forward_dynamics, inverse_dynamics
 # TODO: Add forward and inverse dynamics functions
