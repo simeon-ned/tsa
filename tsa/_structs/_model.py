@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-import casadi
 
 
 @dataclass
@@ -8,12 +7,12 @@ class KinematicParameters:
     Kinematic parameters for the twisted string actuator.
 
     Attributes:
-        radius (float | casadi.SX): String radius in meters. Defaults to 0.001.
-        length (float | casadi.SX): String length in meters. Defaults to 0.2.
+        radius (float): String radius in meters. Defaults to 0.001.
+        length (float): String length in meters. Defaults to 0.2.
     """
 
-    radius: float | casadi.SX = 0.001
-    length: float | casadi.SX = 0.2
+    radius: float = 0.001
+    length: float = 0.2
 
 
 @dataclass
@@ -22,14 +21,14 @@ class SpaceParameters:
     Parameters for a specific space (motor or load) in the twisted string actuator system.
 
     Attributes:
-        inertia (float | casadi.SX): Inertia of the space.
-        damping (float | casadi.SX): Viscous damping coefficient.
-        friction (float | casadi.SX): Coulomb friction coefficient.
+        inertia (float): Inertia of the space.
+        damping (float): Viscous damping coefficient.
+        friction (float): Coulomb friction coefficient.
     """
 
-    inertia: float | casadi.SX
-    damping: float | casadi.SX
-    friction: float | casadi.SX
+    inertia: float
+    damping: float
+    friction: float
 
 
 @dataclass
@@ -64,12 +63,12 @@ class StiffnessParameters:
     Stiffness parameters for the twisted string actuator.
 
     Attributes:
-        transverse (float | casadi.SX): Transverse stiffness coefficient. Defaults to 1000.0.
-        longitudinal (float | casadi.SX): Longitudinal stiffness coefficient. Defaults to 5000.0.
+        transverse (float): Transverse stiffness coefficient. Defaults to 1000.0.
+        longitudinal (float): Longitudinal stiffness coefficient. Defaults to 5000.0.
     """
 
-    transverse: float | casadi.SX = 1000.0
-    longitudinal: float | casadi.SX = 5000.0
+    transverse: float = 1000.0
+    longitudinal: float = 5000.0
 
 
 @dataclass
