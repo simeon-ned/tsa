@@ -1,9 +1,8 @@
 from .._structs import Model, Data, Space
 from ..kinematics import jacobian, djacobian
-import casadi
 
 
-def inertia(model: Model, data: Data, space: Space) -> float | casadi.SX:
+def inertia(model: Model, data: Data, space: Space) -> float:
     """
     Calculate the inertia term M(q) for the chosen space.
 
@@ -13,7 +12,7 @@ def inertia(model: Model, data: Data, space: Space) -> float | casadi.SX:
         space (Space): The space enum (MOTOR or LOAD) for which to calculate inertia.
 
     Returns:
-        float | casadi.SX: The inertia term M(q).
+        float: The inertia term M(q).
 
     Raises:
         ValueError: If an invalid space is provided.
@@ -40,7 +39,7 @@ def inertia(model: Model, data: Data, space: Space) -> float | casadi.SX:
     return D
 
 
-def coriolis(model: Model, data: Data, space: Space) -> float | casadi.SX:
+def coriolis(model: Model, data: Data, space: Space) -> float:
     """
     Calculate the Coriolis term C(q, dq) for the chosen space.
 
@@ -50,7 +49,7 @@ def coriolis(model: Model, data: Data, space: Space) -> float | casadi.SX:
         space (Space): The space enum (MOTOR or LOAD) for which to calculate the Coriolis term.
 
     Returns:
-        float | casadi.SX: The Coriolis term C(q, dq).
+        float: The Coriolis term C(q, dq).
 
     Raises:
         ValueError: If an invalid space is provided.
@@ -83,17 +82,17 @@ def coriolis(model: Model, data: Data, space: Space) -> float | casadi.SX:
     return C
 
 
-def jamming(model: Model, data: Data, force: float | casadi.SX) -> float | casadi.SX:
+def jamming(model: Model, data: Data, force: float) -> float:
     """
     Calculate the jamming effect.
 
     Args:
         model (Model): The model object containing system parameters.
         data (Data): The data object storing state variables.
-        force (float | casadi.SX): The applied force.
+        force (float): The applied force.
 
     Returns:
-        float | casadi.SX: The jamming effect.
+        float: The jamming effect.
     """
     L = model.kinematic.length
     r = model.kinematic.radius
@@ -111,17 +110,17 @@ def jamming(model: Model, data: Data, force: float | casadi.SX) -> float | casad
     return jamming_effect
 
 
-def static(model: Model, data: Data, force: float | casadi.SX = 0) -> float | casadi.SX:
+def static(model: Model, data: Data, force: float = 0) -> float:
     """
     Calculate the static term.
 
     Args:
         model (Model): The model object containing system parameters.
         data (Data): The data object storing state variables.
-        force (float | casadi.SX, optional): The applied force. Defaults to 0.
+        force (float, optional): The applied force. Defaults to 0.
 
     Returns:
-        float | casadi.SX: The static term.
+        float: The static term.
     """
     J = jacobian(model, data)
     data.motor.jacobian = J
@@ -131,7 +130,7 @@ def static(model: Model, data: Data, force: float | casadi.SX = 0) -> float | ca
     return static_term
 
 
-def nonlinear(model: Model, data: Data, space: Space) -> float | casadi.SX:
+def nonlinear(model: Model, data: Data, space: Space) -> float:
     """
     Calculate the nonlinear term for the chosen space.
 
@@ -141,7 +140,7 @@ def nonlinear(model: Model, data: Data, space: Space) -> float | casadi.SX:
         space (Space): The space enum (MOTOR or LOAD) for which to calculate the nonlinear term.
 
     Returns:
-        float | casadi.SX: The nonlinear term.
+        float: The nonlinear term.
 
     Raises:
         ValueError: If an invalid space is provided.
@@ -159,21 +158,3 @@ def nonlinear(model: Model, data: Data, space: Space) -> float | casadi.SX:
         raise ValueError(f"Invalid space: {space}")
 
     return nonlinear_term
-
-
-# TODO: Decide on implementing this function. It may already be implemented elsewhere.
-# def nonlinear_term_mixed(model: Model, data: Data) -> float | casadi.SX:
-#     L = model.kinematic.length
-#     r = model.kinematic.radius
-#     b_m = model.dynamic.motor.damping
-#     I = model.dynamic.motor.inertia
-#     m = model.dynamic.load.inertia
-#     b_x = model.dynamic.load.damping
-#     g = 9.81  # Gravity constant (you may want to add this to the Model class)
-
-#     theta, dtheta = data.theta, data.dtheta
-#     x, dx = data.x, data.dx
-
-#     J = jacobian(model, data)
-#     h_x = b_m*dtheta - I*(dtheta**2 * r**2 + dx**2)/((L-x)*J) + J*(b_x*dx + m*g)
-# return h_x

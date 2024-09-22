@@ -2,8 +2,11 @@
 name = "tsa"
 description = "twisted string actuators"
 version = "0.1.0"
-authors = [{ name = "Lev Kozlov", email = "l.kozlov@kaist.ac.kr" }]
-dependencies = ["casadi", "numpy"]
+authors = [
+    { name = "Simeon Nedelchev", email = "simkaned@gmail.com" },
+    { name = "Lev Kozlov", email = "l.kozlov@kaist.ac.kr" },
+]
+dependencies = ["numpy"]
 readme = "README.md"
 requires-python = ">=3.10"
 
