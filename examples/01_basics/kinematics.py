@@ -1,5 +1,5 @@
-from tsa import Model, Data
-from tsa.kinematics import contraction, jacobian
+from twisted_strings import Model, Data
+from twisted_strings.kinematics import contraction, jacobian
 
 # Numerical modeling without CasADi
 
