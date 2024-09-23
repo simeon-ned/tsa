@@ -17,9 +17,7 @@ This repository contains a Python module for modeling, simulating, and analyzing
 To install the TSA module, clone this repository and install the module in editable mode:
 
 ```bash
-git clone https://github.com/simeon-ned/tsa
-cd tsa
-pip install -e . 
+pip install twisted-strings
 ```
 
 ## Usage

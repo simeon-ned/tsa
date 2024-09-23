@@ -1,7 +1,7 @@
 [project]
 name = "twisted-strings"
 description = "twisted string actuators"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
     { name = "Simeon Nedelchev", email = "simkaned@gmail.com" },
     { name = "Lev Kozlov", email = "l.kozlov@kaist.ac.kr" },
@@ -22,7 +22,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["tsa*"]
+include = ["twisted_strings*"]
 
 
 [tool.pytest.ini_options]
