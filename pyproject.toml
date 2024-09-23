@@ -1,7 +1,7 @@
 [project]
 name = "tsa"
 description = "twisted string actuators"
-version = "0.1.0"
+version = "0.0.1"
 authors = [
     { name = "Simeon Nedelchev", email = "simkaned@gmail.com" },
     { name = "Lev Kozlov", email = "l.kozlov@kaist.ac.kr" },
