@@ -1,5 +1,5 @@
 [project]
-name = "tsa-lib"
+name = "twisted-strings"
 description = "twisted string actuators"
 version = "0.0.1"
 authors = [
