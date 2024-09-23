@@ -13,8 +13,8 @@ requires-python = ">=3.10"
 optional-dependencies = { "dev" = ["pre-commit", "pytest"] }
 
 [project.urls]
-homepage = "https://github.com/based-robotics/tsa"
-repository = "https://github.com/based-robotics/tsa.git"
+homepage = "https://github.com/simeon-ned/tsa"
+repository = "https://github.com/simeon-ned/tsa.git"
 
 [build-system]
 requires = ["setuptools>=43.0.0", "wheel"]
