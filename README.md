@@ -1,20 +1,24 @@
 # Twisted String Actuator Modeling and Simulation
-
-<!-- TODO: ADD LOGO -->
+<!-- TODO: -->
+<!-- - Small buttons displaying PyPI status and other relevant information
+- A distinctive logo for easy recognition
+- A quick-start tutorial in Google Colab for rapid familiarization -->
 
 ## Overview
 
-This repository contains a Python module for modeling, simulating, and analyzing [Twisted String Actuators](https://www.youtube.com/watch?v=YD1GXLHVjYc) (TSAs). TSAs are a type of linear actuator that converts rotational motion into linear motion through the twisting of strings or cables.
+This repository houses a Python module for modeling, simulating, and analyzing [Twisted String Actuators](https://www.youtube.com/watch?v=YD1GXLHVjYc) (TSAs). TSAs are innovative linear actuators that transform rotational motion into linear motion by twisting strings or cables, offering unique advantages in various applications.
 
 ## Features
 
 - Symbolic and numerical computation support
-- Extensible data structures for representing TSA states and parameters
-- Kinematic and dynamic modeling of TSAs, Functions for calculating contraction, jacobians, dynamical components and other key properties
+- Flexible data structures for comprehensive TSA state and parameter representation
+- Kinematic and dynamic modeling of TSAs: functions for calculating contraction, Jacobians, dynamical components, and other critical properties
+
+<!-- Please dive into quick tutorial to get you up to speed in no time <a href="https://colab.research.google.com/github/based-robotics/jaxadi/blob/master/examples/_demo.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" width="120" align="center"/></a> -->
 
 ## Installation
 
-To install the TSA module, clone this repository and install the module in editable mode:
+Get started quickly by installing the TSA module using pip:
 
 ```bash
 pip install twisted-strings
@@ -22,31 +26,37 @@ pip install twisted-strings
 
 ## Usage
 
-Here's a basic example of how to use the TSA module:
+Here's a quick example to demonstrate the basics of the TSA module:
 
 ```python
 from tsa import Model, Data
 from tsa.kinematics import contraction, jacobian
 
-# Create a model and set parameters
+# Initialize model and set parameters
 model = Model()
 model.kinematic.length = 0.2
 model.kinematic.radius = 1e-3
 
-# Create a data object and set state
+# Create data object and set state
 data = Data()
 data.motor.position = 100
 
-# Calculate contraction and jacobian
+# Calculate contraction and Jacobian
 x = contraction(model, data)
 jac = jacobian(model, data)
 
 print(f"Contraction: {x}")
 print(f"Jacobian: {jac}")
 ```
-By populating the data and module structures with more advanced data types one may build more profound models and calculations, i.e build symbolical and differentiable models with CasADi and JAX, as well as simple symbolical calculations with sympy.
 
-For more detailed examples, please refer to the `examples` directory. 
+By leveraging more advanced data types in the data and module structures, you can construct sophisticated models and perform complex calculations. This includes building symbolical and differentiable models with CasADi and JAX, as well as conducting straightforward symbolical calculations using sympy.
+
+For more in-depth examples, explore the `examples` directory. Note that running some examples may require additional libraries such as sympy and CasADi. We recommend creating a dedicated environment for this project, the simplest way is to use the provided `tsa_environment.yml` file to create the environment:
+
+```bash
+conda env create -f environment.yml
+conda activate tsa
+```
 
 
 <!-- ## Contributing
@@ -84,3 +94,11 @@ If you use this software in your research, please cite it as follows:
   url = {https://github.com/simeon-ned/tsa}
 }
 ```
+
+<!-- ## Future Enhancements
+
+Stay tuned for these exciting updates!
+
+## Feedback and Contributions
+
+We welcome your feedback and contributions to make this project even better. Feel free to open an issue or submit a pull request on our GitHub repository. -->

@@ -1,5 +1,5 @@
-from tsa import Model, Data
-from tsa.dynamics import inertia, coriolis, jamming, static, nonlinear, Space
+from twisted_strings import Model, Data
+from twisted_strings.dynamics import inertia, coriolis, jamming, static, nonlinear, Space
 import casadi as ca
 
 model = Model()
