@@ -2,6 +2,9 @@ from .._structs import Model, Data, Space
 from ..kinematics import jacobian, djacobian
 
 
+# TODO: Provide arguments similarly to kinematics functions
+
+
 def inertia(model: Model, data: Data, space: Space) -> float:
     """
     Calculate the inertia term M(q) for the chosen space.

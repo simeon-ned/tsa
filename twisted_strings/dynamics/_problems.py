@@ -3,9 +3,14 @@ from ..kinematics import jacobian
 from ._components import inertia, nonlinear, jamming
 
 
-def forward_dynamics(model: Model, data: Data, space: Space, torque: float, include_jamming: bool = True) -> float:
+# TODO: Provide arguments similarly to kinematics functions
+
+
+def forward_dynamics(model: Model, data: Data, space: Space) -> float:
     """
     Calculate the forward dynamics (acceleration) for the chosen space.
+
+    NOTE: Jamming is not taken in to account for now.
 
     Args:
         model (Model): The model object containing system parameters.
@@ -21,18 +26,14 @@ def forward_dynamics(model: Model, data: Data, space: Space, torque: float, incl
         ValueError: If an invalid space is provided.
     """
     m = inertia(model, data, space)
+    # this term takes in to account external forces
     n = nonlinear(model, data, space)
 
-    if include_jamming:
-        j = jamming(model, data, torque if space == Space.LOAD else jacobian(model, data) * torque)
-    else:
-        j = 0
-
     if space == Space.MOTOR:
-        acceleration = (torque - n - j) / m
+        acceleration = (data.load.force - n) / m
         data.motor.acceleration = acceleration
     elif space == Space.LOAD:
-        acceleration = (torque - n - j) / m
+        acceleration = (data.load.force - n) / m
         data.load.acceleration = acceleration
     else:
         raise ValueError(f"Invalid space: {space}")
@@ -40,9 +41,7 @@ def forward_dynamics(model: Model, data: Data, space: Space, torque: float, incl
     return acceleration
 
 
-def inverse_dynamics(
-    model: Model, data: Data, space: Space, acceleration: float, include_jamming: bool = True
-) -> float:
+def inverse_dynamics(model: Model, data: Data, space: Space, include_jamming: bool = True) -> float:
     """
     Calculate the inverse dynamics (required torque/force) for the chosen space.
 
@@ -63,14 +62,14 @@ def inverse_dynamics(
     n = nonlinear(model, data, space)
 
     if space == Space.MOTOR:
-        torque = m * acceleration + n
-        data.motor.torque = torque
+        torque = m * data.motor.acceleration + n
+        data.motor.force = torque
         return torque
     elif space == Space.LOAD:
-        force = m * acceleration + n
+        force = m * data.load.acceleration + n
         if include_jamming:
-            j = jamming(model, data, force)
-            force += j
+            jam = jamming(model, data, force)
+            force += jam
         data.load.force = force
         return force
     else:
