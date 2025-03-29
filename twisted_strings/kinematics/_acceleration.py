@@ -1,3 +1,17 @@
+"""
+Acceleration-related kinematics calculations for Twisted String Actuators (TSA).
+
+This module provides functions for computing acceleration relationships in a TSA
+system. The main functions are:
+- djacobian: Computes the time derivative of the Jacobian (dJ/dt)
+- motor_acceleration: Computes motor acceleration from load acceleration
+
+The functions handle the mapping between motor and load space accelerations,
+taking into account the time-varying nature of the Jacobian. All functions
+maintain consistency with the position and velocity calculations from other
+modules.
+"""
+
 from .._structs import Model, Data
 from ._position import contraction, motor_angle
 from ._velocity import contraction_speed, motor_speed, jacobian

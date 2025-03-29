@@ -1,3 +1,17 @@
+"""
+Velocity-related kinematics calculations for Twisted String Actuators (TSA).
+
+This module provides functions for computing velocity relationships and Jacobians
+in a TSA system. The main functions are:
+- jacobian: Computes the Jacobian relating motor and load spaces
+- contraction_speed: Computes load velocity from motor velocity
+- motor_speed: Computes motor velocity from load velocity
+
+All functions update the provided Data object with computed values and maintain
+consistency between motor and load spaces. The Jacobian calculations are central
+to mapping between motor and load space velocities.
+"""
+
 from .._structs import Model, Data
 from ._position import motor_angle
 

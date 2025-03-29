@@ -1,0 +1,11 @@
+☐ Colab example
+☐ The options to installation
+☐ Documentation with sphinx
+☐ Examples:
+    ☐ Using jax
+    ☐ Using casadi
+    ☐ Using sympy
+    ☐ Using numpy
+    ☐ Using torch
+☐ Integrating as custom actuator to mujoco
+

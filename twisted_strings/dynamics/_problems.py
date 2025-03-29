@@ -1,3 +1,16 @@
+"""
+Dynamic problems solver for Twisted String Actuators (TSA).
+
+This module provides functions for solving the forward and inverse dynamics
+problems for TSA systems. The main functions are:
+- forward_dynamics: Computes acceleration given forces/torques
+- inverse_dynamics: Computes required forces/torques given desired acceleration
+
+Both problems can be solved in either motor or load space as specified by the
+Space enum parameter. The functions use the dynamic components (inertia,
+Coriolis, etc.) and can optionally include jamming effects in the calculations.
+"""
+
 from .._structs import Model, Data, Space
 from ..kinematics import jacobian
 from ._components import inertia, nonlinear, jamming

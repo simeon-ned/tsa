@@ -21,3 +21,43 @@ from ._acceleration import djacobian, motor_acceleration
 from ._position import contraction, motor_angle
 from ._velocity import contraction_speed, jacobian, motor_speed
 from ._constraints import position_constraint, velocity_constraint, acceleration_constraint
+from .._structs import Model, Data
+
+
+def compute_all(model: Model, data: Data, theta: float | None = None, x: float | None = None):
+    """
+    Compute all kinematic properties based on either motor angle or contraction.
+
+    Args:
+        model (Model): The model object containing kinematic parameters.
+        data (Data): The data object to store and retrieve state variables.
+        theta (float | None, optional): The motor angle in radians. Defaults to None.
+        x (float | None, optional): The contraction in meters. Defaults to None.
+
+    Note:
+        Either theta or x must be provided. If both are provided, theta takes precedence.
+        This function updates all relevant fields in the data object.
+    """
+    if theta is not None:
+        contraction(model, data, theta)
+    elif x is not None:
+        motor_angle(model, data, x)
+    else:
+        raise ValueError("Either theta or x must be provided.")
+
+    jacobian(model, data)
+    djacobian(model, data)
+
+    # Compute velocities and accelerations if data is available
+    if data.motor.velocity is not None:
+        contraction_speed(model, data)
+    elif data.load.velocity is not None:
+        motor_speed(model, data)
+
+   #  if data.motor.acceleration is not None:
+   #      motor_acceleration(model, data)
+
+    # Compute constraints
+    position_constraint(model, data)
+    velocity_constraint(model, data)
+   #  acceleration_constraint(model, data)

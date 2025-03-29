@@ -1,8 +1,12 @@
-# Twisted String Actuator Modeling and Simulation
+<!-- # Twisted String Actuator Modeling and Simulation -->
 <!-- TODO: -->
 <!-- - Small buttons displaying PyPI status and other relevant information
 - A distinctive logo for easy recognition
 - A quick-start tutorial in Google Colab for rapid familiarization -->
+
+<p align="center">
+  <img src="_assets/tsa_logo.png" width="350" alt="TSA Logo" style="margin: -90px 0;">
+</p>
 
 ## Overview
 

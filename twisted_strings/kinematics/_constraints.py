@@ -1,3 +1,19 @@
+"""
+Kinematic constraints calculations for Twisted String Actuators (TSA).
+
+This module provides functions for computing and verifying the kinematic
+constraints that relate motor and load motion in a TSA system. The constraints
+are formulated at three levels:
+- position_constraint: Holonomic constraint between motor angle and contraction
+- velocity_constraint: First time derivative of the position constraint
+- acceleration_constraint: Second time derivative of the position constraint
+
+These constraints ensure the physical consistency of the TSA model by enforcing
+the geometric relationship between motor rotation and string contraction at all
+motion levels. The constraint functions return zero when the states satisfy the
+physical constraints of the system.
+"""
+
 from .._structs import Model, Data
 
 

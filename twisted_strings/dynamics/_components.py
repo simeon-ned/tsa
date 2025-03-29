@@ -1,3 +1,20 @@
+"""
+Dynamic components calculations for Twisted String Actuators (TSA).
+
+This module provides functions for computing various dynamic terms in the TSA
+equations of motion. The main components are:
+- inertia: Computes the inertia matrix M(q)
+- coriolis: Computes Coriolis and damping terms C(q,dq)
+- jamming: Computes the jamming effect due to string tension
+- static: Computes static forces/torques
+- nonlinear: Combines Coriolis and static terms
+
+All functions update the provided Data object with computed values and can work
+in either motor or load space as specified by the Space enum parameter.
+The components follow the standard robot dynamics equation:
+    M(q)ddq + C(q,dq)dq + G(q) = tau
+"""
+
 from .._structs import Model, Data, Space
 from ..kinematics import jacobian, djacobian
 
@@ -148,6 +165,7 @@ def nonlinear(model: Model, data: Data, space: Space) -> float:
     Raises:
         ValueError: If an invalid space is provided.
     """
+    
     C = coriolis(model, data, space)
     G = static(model, data)
 

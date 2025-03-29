@@ -1,7 +1,17 @@
+"""
+Position-related kinematics calculations for Twisted String Actuators (TSA).
+
+This module provides functions for computing the basic kinematic relationships
+between motor angle and load position (contraction) in a TSA system. The main
+functions are:
+- contraction: Computes load position from motor angle
+- motor_angle: Computes motor angle from load position
+
+All functions update the provided Data object with computed values and maintain
+consistency between motor and load spaces.
+"""
+
 from .._structs import Model, Data
-
-# TODO: Add the main docstring with references to papers
-
 
 def contraction(model: Model, data: Data, theta: float | None = None) -> float:
     """
@@ -21,11 +31,22 @@ def contraction(model: Model, data: Data, theta: float | None = None) -> float:
     Note:
         This function updates data.motor.position and data.load.position with the input and calculated values respectively.
     """
+    if model.kinematic.length <= 0 or model.kinematic.radius <= 0:
+        raise ValueError("Invalid model parameters: length and radius must be positive.")
+
     theta = data.motor.position if theta is None else theta
+    if theta < 0:
+        raise ValueError("Invalid motor angle: theta must be non-negative.")
+
     L, r = model.kinematic.length, model.kinematic.radius
     data.motor.position = theta
-    data.load.position = L - (L**2 - (theta * r) ** 2) ** 0.5
-    return data.load.position
+    contraction = L - (L**2 - (theta * r) ** 2) ** 0.5
+    
+    if contraction < 0 or contraction > L:
+        raise ValueError(f"Calculated contraction {contraction} is outside valid range [0, {L}].")
+    
+    data.load.position = contraction
+    return contraction
 
 
 def motor_angle(model: Model, data: Data, x: float | None = None) -> float:
@@ -47,6 +68,9 @@ def motor_angle(model: Model, data: Data, x: float | None = None) -> float:
         This function updates data.load.position and data.motor.position with the input and calculated values respectively.
     """
     x = data.load.position if x is None else x
+    if x < 0:
+        raise ValueError("Invalid contraction: x must be non-negative.")
+
     L, r = model.kinematic.length, model.kinematic.radius
 
     data.load.position = x
