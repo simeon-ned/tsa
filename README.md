@@ -5,7 +5,7 @@
 - A quick-start tutorial in Google Colab for rapid familiarization -->
 
 <p align="center">
-  <img src="_assets/tsa_logo.png" width="350" alt="TSA Logo" style="margin: -90px 0;">
+  <img src="_assets/tsa_logo.svg" width="350" alt="TSA Logo">
 </p>
 
 ## Overview
