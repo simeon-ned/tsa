@@ -13,6 +13,7 @@ consistency between motor and load spaces.
 
 from .._structs import Model, Data
 
+
 def contraction(model: Model, data: Data, theta: float | None = None) -> float:
     """
     Calculate contraction as a function of motor angle.
@@ -41,10 +42,10 @@ def contraction(model: Model, data: Data, theta: float | None = None) -> float:
     L, r = model.kinematic.length, model.kinematic.radius
     data.motor.position = theta
     contraction = L - (L**2 - (theta * r) ** 2) ** 0.5
-    
+
     if contraction < 0 or contraction > L:
         raise ValueError(f"Calculated contraction {contraction} is outside valid range [0, {L}].")
-    
+
     data.load.position = contraction
     return contraction
 

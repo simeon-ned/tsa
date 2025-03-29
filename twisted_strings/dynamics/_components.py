@@ -165,7 +165,7 @@ def nonlinear(model: Model, data: Data, space: Space) -> float:
     Raises:
         ValueError: If an invalid space is provided.
     """
-    
+
     C = coriolis(model, data, space)
     G = static(model, data)
 

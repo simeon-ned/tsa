@@ -54,10 +54,12 @@ def compute_all(model: Model, data: Data, theta: float | None = None, x: float |
     elif data.load.velocity is not None:
         motor_speed(model, data)
 
-   #  if data.motor.acceleration is not None:
-   #      motor_acceleration(model, data)
+    #  if data.motor.acceleration is not None:
+    #      motor_acceleration(model, data)
 
     # Compute constraints
     position_constraint(model, data)
     velocity_constraint(model, data)
-   #  acceleration_constraint(model, data)
+
+
+#  acceleration_constraint(model, data)
